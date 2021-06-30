@@ -3,7 +3,7 @@
  * All other types of Regex expressions will inherit from this base class
  */
 
-export class RegexpNode {
+class RegexpNode {
   derive(char) {
     return NeverMatches;
   }
@@ -23,11 +23,11 @@ class _EmptyString extends RegexpNode {
     return true;
   }
 }
-export const EmptyString = new _EmptyString(); // successful match
-export const NeverMatches = new RegexpNode(); // unsuccessful match
+const EmptyString = new _EmptyString(); // successful match
+const NeverMatches = new RegexpNode(); // unsuccessful match
 
 /** Represents a graph of the Regex expression we want to match against */
-export class CharacterNode extends RegexpNode {
+class CharacterNode extends RegexpNode {
   constructor(char, next) {
     super();
     this.char = char;
@@ -47,7 +47,7 @@ export class CharacterNode extends RegexpNode {
  * Represents the | character in regex.
  * alternatives: CharacterNode[]
  */
-export class AlternationNode extends RegexpNode {
+class AlternationNode extends RegexpNode {
   constructor(alternatives) {
     super();
     let _alternatives = alternatives.filter((alt) => alt !== NeverMatches);
@@ -78,7 +78,7 @@ export class AlternationNode extends RegexpNode {
  * Represents the . character in Regex
  * Since it matches any character, it advances the state by one character.
  */
-export class AnyCharacterNode extends RegexpNode {
+class AnyCharacterNode extends RegexpNode {
   constructor(next) {
     super();
     this.next = next;
@@ -92,7 +92,7 @@ export class AnyCharacterNode extends RegexpNode {
 /**
  * Represents the repetition node in Regex
  */
-export class RepetitionNode extends RegexpNode {
+class RepetitionNode extends RegexpNode {
   constructor(next) {
     super();
     this.head = NeverMatches;
@@ -114,3 +114,5 @@ export class RepetitionNode extends RegexpNode {
     return true;
   }
 }
+
+module.exports = { RegexpNode, EmptyString, NeverMatches, CharacterNode, AnyCharacterNode, RepetitionNode };
