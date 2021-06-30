@@ -63,29 +63,26 @@ class RE {
   }
 
   match(str) {
-    let state = this.start,
-      chars = Array.from(str);
+    let state = this.start;
+    const chars = Array.from(str);
     if ((chars.length === 0) && (state === EmptyString)) {
       return true;
     }
     for (let i = 0; i < chars.length; i++) {
       let char = chars[i];
       state = state.derive(char);
-      if (state === EmptyString) {
-        if (i === chars.length - 1) {
-          return true;
-        } else {
-          return false;
-        }
-      } else if (state === NeverMatches) {
+      if (state.matchEnd() && i === chars.length - 1) {
+        return true;
+      } else if (state.matchEnd() && !state.canMatchMore()) {
         return false;
       }
     }
     return false;
-
   }
 }
 
-console.log(new RE(["a", Or(["a", "b"]), "d"]).match("abd")); //=> true
-console.log(new RE(["a", Or(["a", "b"]), "d"]).match("aed")); //=> false
-console.log(new RE([ZeroOrMore("abc"), "d"]).match("d")); //=> true
+console.log(new RE(["a", Or(["a", "b"]), "d"]).match("abd") === true); //=> true
+console.log(new RE(["a", Or(["a", "b"]), "d"]).match("aed") === false); //=> false
+console.log(new RE([ZeroOrMore("abc"), "d"]).match("d") === true); //=> true
+console.log(new RE([ZeroOrMore("abc")]).match("abc") === true);
+console.log(new RE([ZeroOrMore("abc")]).match("abcabc") === true);
