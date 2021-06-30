@@ -7,10 +7,23 @@ export class RegexpNode {
   derive(char) {
     return NeverMatches;
   }
+  // tells us if we have matched the end
+  matchEnd() {
+    return false;
+  }
+  // tells us if we can continue matching
+  canMatchMore() {
+    return !this.matchEnd();
+  }
 }
 
 /* Singleton classes */
-export const EmptyString = new RegexpNode(); // successful match
+class _EmptyString extends RegexpNode {
+  matchEnd() {
+    return true;
+  }
+}
+export const EmptyString = new _EmptyString(); // successful match
 export const NeverMatches = new RegexpNode(); // unsuccessful match
 
 /** Represents a graph of the Regex expression we want to match against */
@@ -51,6 +64,14 @@ export class AlternationNode extends RegexpNode {
   derive(char) {
     return new AlternationNode(this.alternatives.map((alt) => alt.derive(char)));
   }
+
+  matchEnd() {
+    return this.alternatives.some((alt) => alt.matchEnd());
+  }
+
+  canMatchMore() {
+    return this.alternatives.some((alt) => alt.canMatchMore());
+  }
 }
 
 /**
@@ -83,5 +104,13 @@ export class RepetitionNode extends RegexpNode {
       this.head.derive(char),
       this.next.derive(char)
     ])
+  }
+
+  matchEnd() {
+    return this.next.matchEnd();
+  }
+
+  canMatchMore() {
+    return true;
   }
 }
