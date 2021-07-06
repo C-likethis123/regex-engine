@@ -115,4 +115,4 @@ class RepetitionNode extends RegexpNode {
   }
 }
 
-module.exports = { RegexpNode, EmptyString, NeverMatches, CharacterNode, AnyCharacterNode, RepetitionNode };
+module.exports = {RegexpNode, EmptyString, NeverMatches, CharacterNode, AnyCharacterNode, RepetitionNode, AlternationNode};
