@@ -1,5 +1,5 @@
-import {CharacterNode, RepetitionNode, AlternationNode, EmptyString, AnyCharacterNode, NeverMatches} from './RegexpNode.js';
-import {_Or, _ZeroOrMore, Or, ZeroOrMore, Any} from './StringAST.js';
+const {CharacterNode, RepetitionNode, AlternationNode, EmptyString, AnyCharacterNode, NeverMatches} = require('./RegexpNode.js');
+const {_Or, _ZeroOrMore, Any} = require('./StringAST.js');
 
 /**
  * The entry point for the compiler. It takes in literal strings and turns them into chains of character nodes.
@@ -54,35 +54,4 @@ function compile(expr, tail = EmptyString) {
   }
 }
 
-/**
- * Entry point for the compiler
- */
-class RE {
-  constructor(regexp) {
-    this.start = compile(regexp);
-  }
-
-  match(str) {
-    let state = this.start;
-    const chars = Array.from(str);
-    if ((chars.length === 0) && (state === EmptyString)) {
-      return true;
-    }
-    for (let i = 0; i < chars.length; i++) {
-      let char = chars[i];
-      state = state.derive(char);
-      if (state.matchEnd() && i === chars.length - 1) {
-        return true;
-      } else if (state.matchEnd() && !state.canMatchMore()) {
-        return false;
-      }
-    }
-    return false;
-  }
-}
-
-console.log(new RE(["a", Or(["a", "b"]), "d"]).match("abd") === true); //=> true
-console.log(new RE(["a", Or(["a", "b"]), "d"]).match("aed") === false); //=> false
-console.log(new RE([ZeroOrMore("abc"), "d"]).match("d") === true); //=> true
-console.log(new RE([ZeroOrMore("abc")]).match("abc") === true);
-console.log(new RE([ZeroOrMore("abc")]).match("abcabc") === true);
+module.exports = {compile};
