@@ -7,7 +7,13 @@ const {Flags} = require("./Flag.js");
  */
 class RE {
   constructor(regexp, flags = []) {
-    this.start = compile(regexp);
+    this.isCaseInsensitive = false;
+    for (const flag of flags) {
+      if (flag === Flags.CASE_INSENSITIVE) {
+        this.isCaseInsensitive = true;
+      }
+    }
+    this.start = compile(regexp, undefined, this.isCaseInsensitive);
   }
 
   match(str) {
