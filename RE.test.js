@@ -1,5 +1,6 @@
 const {RE} = require('./RE.js');
 const {Or, ZeroOrMore, Any} = require('./StringAST.js');
+const {Flags} = require("./Flag.js");
 
 /* Base case: 'ab' matches 'ab' */
 test('A string matches its regex representation', () => {
@@ -33,4 +34,20 @@ test('A string with one repeated sequence should match', () => {
   expect(regex.match("aabcd")).toBe(true);
   expect(regex.match("ad")).toBe(true);
   expect(regex.match("aabcabcd")).toBe(true);
+});
+
+describe('Testing with case insensitive mode works', () => {
+  test('Regex matches test strings with lower and uppercases', () => {
+    const regex = new RE(["a"], [Flags.CASE_INSENSITIVE]);
+    expect(regex.match("A")).toBe(true);
+    expect(regex.match("a")).toBe(true);
+  });
+
+  test("Regex with OR operator matches insensitive mode", () => {
+    const regex = new RE(["a", Or(["B", "C"])], [Flags.CASE_INSENSITIVE]);
+    expect(regex.match("aB")).toBe(true);
+    expect(regex.match("ab")).toBe(true);
+    expect(regex.match("ac")).toBe(true);
+    expect(regex.match("aC")).toBe(true);
+  });
 });
