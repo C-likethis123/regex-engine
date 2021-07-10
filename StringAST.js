@@ -2,13 +2,13 @@
  * A collection of classes that represents regex patterns specified by the user
  */
 
-export class _Or {
+class _Or {
   constructor(alternatives) {
     this.alternatives = alternatives;
   }
 }
 
-export function Or(alternatives) {
+function Or(alternatives) {
   if (!(alternatives instanceof Array)) {
     throw new TypeError("Alternatives passed to Or must be an array");
   } else {
@@ -16,14 +16,16 @@ export function Or(alternatives) {
   }
 }
 
-export class _ZeroOrMore {
+class _ZeroOrMore {
   constructor(repeatable) {
     this.repeatable = repeatable;
   }
 }
 
-export function ZeroOrMore(repeatable) {
+function ZeroOrMore(repeatable) {
   return new _ZeroOrMore(repeatable);
 }
 
-export const Any = Symbol('Any');
+const Any = Symbol('Any');
+
+module.exports = {_Or, Or, _ZeroOrMore, ZeroOrMore, Any};
