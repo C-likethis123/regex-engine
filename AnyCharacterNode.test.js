@@ -1,4 +1,4 @@
-const {AnyCharacterNode, EmptyString, NeverMatches} = require('./RegexpNode.js');
+const {AnyCharacterNode, EmptyString, NeverMatches} = require('./RegexpNode');
 
 test('Matches all alphanumeric characters', () => {
   const alphanumericString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
