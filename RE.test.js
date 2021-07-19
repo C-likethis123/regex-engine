@@ -1,5 +1,5 @@
 const {RE} = require('./RE.js');
-const {Or, ZeroOrMore, Any} = require('./StringAST.js');
+const {Or, ZeroOrMore, Any} = require('./StringAST');
 const {Flags} = require("./Flag.js");
 
 /* Base case: 'ab' matches 'ab' */

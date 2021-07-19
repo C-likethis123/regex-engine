@@ -1,5 +1,5 @@
-const {CharacterNode, RepetitionNode, AlternationNode, EmptyString, AnyCharacterNode, NeverMatches} = require('./RegexpNode.js');
-const {_Or, _ZeroOrMore, Any} = require('./StringAST.js');
+const {CharacterNode, RepetitionNode, AlternationNode, EmptyString, AnyCharacterNode, NeverMatches} = require('./RegexpNode');
+const {_Or, _ZeroOrMore, Any} = require('./StringAST');
 
 /**
  * The entry point for the compiler. It takes in literal strings and turns them into chains of character nodes.

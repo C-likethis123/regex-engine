@@ -1,5 +1,5 @@
 const {compile} = require("./Compiler.js");
-const {EmptyString} = require("./RegexpNode.js");
+const {EmptyString} = require("./RegexpNode");
 const {Flags} = require("./Flag.js");
 
 /**
