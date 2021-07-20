@@ -1,12 +1,18 @@
 {
-  const {Or} = require("../StringAST");
+  const {Any} = require("../StringAST");
 }
 start = regex
 
-regex = charGroups*
+regex
+	= head:(match/charGroups)  tail:regex? { return tail ? [...head, ...tail] : [...head] }
+  
+charGroups = "(" chars:regex ")" { return [chars] }
 
-chars = [a-zA-Z0-9]
+// Terminal characters
+chars = digits:[a-zA-Z] { return [digits]; }
 
-charGroups = "(" chars: charGroups+ ")" {return chars} / chars
+// quantifiers
+any = [\.] { return [Any] }
 
-or = left:charGroups "|" right:charGroups { return Or([left, right]) }
+// match
+match = chars/any
