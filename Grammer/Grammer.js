@@ -5,18 +5,18 @@ start = regex
 
 regex
   = head:(match / charGroups) or:or? tail:regex? {
-    if(or) {
+    if (or) {
       const [ next, ...rest ] = tail;
       return tail && [Or([ ...head, next ]), ...rest];
     }
-    return tail ? [ ...head, ...tail ] : [ ...head ];
+    return tail ? [...head, ...tail] : [...head];
   }
   
-charGroups = "(" chars: regex ")" quantifier:quantifier ? {
+charGroups = "(" chars:regex ")" quantifier:quantifier? {
   if (quantifier === ZeroOrMore) {
-    return [ ZeroOrMore(chars) ];
+    return [ZeroOrMore(chars)];
   } else {
-    return [ chars ];
+    return [chars];
   }
 }
 
@@ -35,8 +35,8 @@ quantifier = zeroOrMore
 // match
 match =
   matchItem:(chars/any)
-  quantifier: quantifier? {
-  if(quantifier === ZeroOrMore) {
+  quantifier:quantifier? {
+  if (quantifier === ZeroOrMore) {
     return [ ZeroOrMore(...matchItem) ];
   } else {
     return matchItem;

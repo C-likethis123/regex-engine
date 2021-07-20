@@ -142,11 +142,11 @@ function peg$parse(input, options) {
       peg$startRuleFunction  = peg$parsestart,
 
       peg$c0 = function(head, or, tail) {
-          if(or) {
+          if (or) {
             const [ next, ...rest ] = tail;
             return tail && [Or([ ...head, next ]), ...rest];
           }
-          return tail ? [ ...head, ...tail ] : [ ...head ];
+          return tail ? [...head, ...tail] : [...head];
         },
       peg$c1 = "(",
       peg$c2 = peg$literalExpectation("(", false),
@@ -154,9 +154,9 @@ function peg$parse(input, options) {
       peg$c4 = peg$literalExpectation(")", false),
       peg$c5 = function(chars, quantifier) {
         if (quantifier === ZeroOrMore) {
-          return [ ZeroOrMore(chars) ];
+          return [ZeroOrMore(chars)];
         } else {
-          return [ chars ];
+          return [chars];
         }
       },
       peg$c6 = /^[a-zA-Z]/,
@@ -172,7 +172,7 @@ function peg$parse(input, options) {
       peg$c16 = peg$classExpectation(["|"], false, false),
       peg$c17 = function() {return Or},
       peg$c18 = function(matchItem, quantifier) {
-        if(quantifier === ZeroOrMore) {
+        if (quantifier === ZeroOrMore) {
           return [ ZeroOrMore(...matchItem) ];
         } else {
           return matchItem;
