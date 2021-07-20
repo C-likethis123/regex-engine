@@ -20,6 +20,19 @@ test('Parses a regex with an Or quantifier', () => {
   expect(parser.parse("a|c")).toEqual(Or(["a", "c"]));
 })
 
-test('With character groups and individual characters', () => {
-  expect(parser.parse("(ab)|c")).toEqual(Or([["a", "b"], "c"]));
+/* Testing Any */
+describe('Parses expressions with Any', () => {
+  const {Any} = require("../StringAST");
+  test('Only Any', () => {
+    expect(parser.parse(".")).toStrictEqual([ Any ]);
+    expect(parser.parse("..")).toStrictEqual([ Any, Any ]);
+  });
+
+  test('With Any and normal regex expressions', () => {
+    expect(parser.parse("b.c")).toStrictEqual([ "b", Any, "c" ]);
+  });
+
+  test('With Any and nested regex expressions', () => {
+    expect(parser.parse("b.c(ab.)")).toStrictEqual([ "b", Any, "c", [ "a", "b", Any ] ]);
+  });
 });
