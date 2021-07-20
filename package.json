@@ -6,7 +6,8 @@
   "main": "Grammer/parser.js",
   "scripts": {
     "test": "jest",
-    "generate-parser": "pegjs -o Grammer/Parser.js Grammer/Grammer.js"
+    "generate-parser": "pegjs -o Grammer/Parser.js Grammer/Grammer.js",
+    "coverage": "jest --collect-coverage"
   },
   "author": "",
   "license": "ISC",
