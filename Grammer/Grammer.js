@@ -6,7 +6,13 @@ start = regex
 regex
 	= head:(match/charGroups)  tail:regex? { return tail ? [...head, ...tail] : [...head] }
   
-charGroups = "(" chars:regex ")" { return [chars] }
+charGroups = "(" chars: regex ")" quantifier:quantifier ? {
+  if (quantifier === ZeroOrMore) {
+    return [ ZeroOrMore(chars) ];
+  } else {
+    return [ chars ];
+  }
+}
 
 // Terminal characters
 chars = digits:[a-zA-Z] { return [digits]; }

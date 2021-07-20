@@ -46,6 +46,11 @@ describe('ZeroOrMore', () => {
     expect(parser.parse("abc*")).toStrictEqual([ "a", "b", ZeroOrMore("c") ]);
   });
 
+  test('ZeroOrMore with character groups', () => {
+    expect(parser.parse("(abc)*")).toStrictEqual([ ZeroOrMore(["a", "b", "c"]) ]);
+    expect(parser.parse("(abc)*d")).toStrictEqual([ ZeroOrMore(["a", "b", "c"]), "d" ]);
+  })
+
   test('ZeroOrMore with Any', () => {
     expect(parser.parse("a.*")).toStrictEqual([ "a", ZeroOrMore(Any) ]);
   });

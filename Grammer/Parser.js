@@ -146,7 +146,13 @@ function peg$parse(input, options) {
       peg$c2 = peg$literalExpectation("(", false),
       peg$c3 = ")",
       peg$c4 = peg$literalExpectation(")", false),
-      peg$c5 = function(chars) { return [chars] },
+      peg$c5 = function(chars, quantifier) {
+        if (quantifier === ZeroOrMore) {
+          return [ ZeroOrMore(chars) ];
+        } else {
+          return [ chars ];
+        }
+      },
       peg$c6 = /^[a-zA-Z]/,
       peg$c7 = peg$classExpectation([["a", "z"], ["A", "Z"]], false, false),
       peg$c8 = function(digits) { return [digits]; },
@@ -338,7 +344,7 @@ function peg$parse(input, options) {
   }
 
   function peg$parsecharGroups() {
-    var s0, s1, s2, s3;
+    var s0, s1, s2, s3, s4;
 
     s0 = peg$currPos;
     if (input.charCodeAt(peg$currPos) === 40) {
@@ -359,9 +365,18 @@ function peg$parse(input, options) {
           if (peg$silentFails === 0) { peg$fail(peg$c4); }
         }
         if (s3 !== peg$FAILED) {
-          peg$savedPos = s0;
-          s1 = peg$c5(s2);
-          s0 = s1;
+          s4 = peg$parsezeroOrMore();
+          if (s4 === peg$FAILED) {
+            s4 = null;
+          }
+          if (s4 !== peg$FAILED) {
+            peg$savedPos = s0;
+            s1 = peg$c5(s2, s4);
+            s0 = s1;
+          } else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+          }
         } else {
           peg$currPos = s0;
           s0 = peg$FAILED;
