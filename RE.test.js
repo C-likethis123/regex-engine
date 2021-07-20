@@ -37,7 +37,7 @@ test('Represent a regex sequence with ZeroOrMore as an array', () => {
 });
 
 test('ZeroOrMore operator matches quantifiers', () => {
-  const regex = new RE([ ZeroOrMore(Any) ]);
+  const regex = new RE([ZeroOrMore(Any)]);
   expect(regex.match("a")).toBe(true);
   expect(regex.match("aaaa")).toBe(true);
   expect(regex.match("ab")).toBe(true);
@@ -71,5 +71,12 @@ describe('Testing with case insensitive mode works', () => {
     expect(regex.match("ab")).toBe(true);
     expect(regex.match("ac")).toBe(true);
     expect(regex.match("aC")).toBe(true);
+  });
+});
+
+describe('Invalid regex', () => {
+  test('Throwing a type error', () => {
+    const invalidRegex = () => new RE([1]);
+    expect(invalidRegex).toThrow(TypeError);
   });
 });
