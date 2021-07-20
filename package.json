@@ -1,11 +1,12 @@
 {
   "name": "regex-engine",
   "version": "1.0.0",
-  "type": "module",
+  "type": "commonjs",
   "description": "",
-  "main": "Compiler.js",
+  "main": "Grammer/parser.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "generate-parser": "pegjs -o Grammer/Parser.js Grammer/Grammer.js"
   },
   "author": "",
   "license": "ISC",
