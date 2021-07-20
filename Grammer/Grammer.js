@@ -1,5 +1,5 @@
 {
-  const {Any} = require("../StringAST");
+  const {Any, ZeroOrMore} = require("../StringAST");
 }
 start = regex
 
@@ -14,5 +14,17 @@ chars = digits:[a-zA-Z] { return [digits]; }
 // quantifiers
 any = [\.] { return [Any] }
 
+zeroOrMore = [\*] {return ZeroOrMore};
+
+quantifier = zeroOrMore
+
 // match
-match = chars/any
+match =
+  matchItem:(chars/any)
+  quantifier: quantifier? {
+  if(quantifier === ZeroOrMore) {
+    return [ ZeroOrMore(matchItem.join("")) ];
+  } else {
+    return matchItem;
+  }
+}
