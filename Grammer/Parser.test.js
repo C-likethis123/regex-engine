@@ -36,3 +36,13 @@ describe('Parses expressions with Any', () => {
     expect(parser.parse("b.c(ab.)")).toStrictEqual([ "b", Any, "c", [ "a", "b", Any ] ]);
   });
 });
+
+
+/** Testing ZeroOrMore */
+describe('ZeroOrMore', () => {
+  const {ZeroOrMore} = require("../StringAST");
+  test('Only ZeroOrMore', () => {
+    expect(parser.parse("a*")).toStrictEqual([ ZeroOrMore("a") ]);
+    expect(parser.parse("abc*")).toStrictEqual([ "a", "b", ZeroOrMore("c") ]);
+  });
+});
