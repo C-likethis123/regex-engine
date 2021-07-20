@@ -10,7 +10,11 @@ test('Parses regex of character groups into arrays of letters', () => {
   expect(parser.parse("a(bc)(cd)")).toStrictEqual(["a", ["b", "c"], ["c", "d"]]);
 });
 
-// Testing OR
+test('Parses regex with nested character groups', () => {
+  expect(parser.parse("a(ba(ab))")).toStrictEqual(["a", ["b", "a", ["a", "b"]]]);
+});
+
+/* Testing OR */
 const {Or} = require('../StringAST');
 test('Parses a regex with an Or quantifier', () => {
   expect(parser.parse("a|c")).toEqual(Or(["a", "c"]));

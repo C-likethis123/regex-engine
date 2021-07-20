@@ -291,7 +291,20 @@ function peg$parse(input, options) {
   function peg$parsestart() {
     var s0;
 
-    s0 = peg$parseor();
+    s0 = peg$parseregex();
+
+    return s0;
+  }
+
+  function peg$parseregex() {
+    var s0, s1;
+
+    s0 = [];
+    s1 = peg$parsecharGroups();
+    while (s1 !== peg$FAILED) {
+      s0.push(s1);
+      s1 = peg$parsecharGroups();
+    }
 
     return s0;
   }
@@ -323,11 +336,11 @@ function peg$parse(input, options) {
     }
     if (s1 !== peg$FAILED) {
       s2 = [];
-      s3 = peg$parsechars();
+      s3 = peg$parsecharGroups();
       if (s3 !== peg$FAILED) {
         while (s3 !== peg$FAILED) {
           s2.push(s3);
-          s3 = peg$parsechars();
+          s3 = peg$parsecharGroups();
         }
       } else {
         s2 = peg$FAILED;
