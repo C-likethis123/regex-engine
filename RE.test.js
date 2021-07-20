@@ -9,6 +9,10 @@ test('A string matches its regex representation', () => {
 
 });
 
+test('Character groupings match', () => {
+  expect(new RE([["a", "b"], "c"]).match("abc")).toBe(true);
+});
+
 test('A string with an OR operator matches all possible sequences', () => {
   const regex = new RE(["a", Or(["a", "b"]), "d"]);
   expect(regex.match("abd")).toBe(true);
