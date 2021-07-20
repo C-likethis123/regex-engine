@@ -23,7 +23,7 @@ match =
   matchItem:(chars/any)
   quantifier: quantifier? {
   if(quantifier === ZeroOrMore) {
-    return [ ZeroOrMore(matchItem.join("")) ];
+    return [ ZeroOrMore(...matchItem) ];
   } else {
     return matchItem;
   }

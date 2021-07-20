@@ -20,9 +20,9 @@ test('Parses a regex with an Or quantifier', () => {
   expect(parser.parse("a|c")).toEqual(Or(["a", "c"]));
 })
 
+const {Any} = require("../StringAST");
 /* Testing Any */
 describe('Parses expressions with Any', () => {
-  const {Any} = require("../StringAST");
   test('Only Any', () => {
     expect(parser.parse(".")).toStrictEqual([ Any ]);
     expect(parser.parse("..")).toStrictEqual([ Any, Any ]);
@@ -44,5 +44,9 @@ describe('ZeroOrMore', () => {
   test('Only ZeroOrMore', () => {
     expect(parser.parse("a*")).toStrictEqual([ ZeroOrMore("a") ]);
     expect(parser.parse("abc*")).toStrictEqual([ "a", "b", ZeroOrMore("c") ]);
+  });
+
+  test('ZeroOrMore with Any', () => {
+    expect(parser.parse("a.*")).toStrictEqual([ "a", ZeroOrMore(Any) ]);
   });
 });

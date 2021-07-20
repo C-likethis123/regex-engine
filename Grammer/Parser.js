@@ -158,7 +158,7 @@ function peg$parse(input, options) {
       peg$c14 = function() {return ZeroOrMore},
       peg$c15 = function(matchItem, quantifier) {
         if(quantifier === ZeroOrMore) {
-          return [ ZeroOrMore(matchItem.join("")) ];
+          return [ ZeroOrMore(...matchItem) ];
         } else {
           return matchItem;
         }

@@ -27,6 +27,22 @@ test('A string with a ZeroOrMore operator matches any number of sequences', () =
   expect(regex.match("abbc")).toBe(true);
 });
 
+
+test('Represent a regex sequence with ZeroOrMore as an array', () => {
+  const regex = new RE([ZeroOrMore(["b", "c"])]);
+  expect(regex.match("bc")).toBe(true);
+  expect(regex.match("bcbc")).toBe(true);
+  expect(regex.match("ac")).toBe(false);
+  expect(regex.match("ccbb")).toBe(false);
+});
+
+test('ZeroOrMore operator matches quantifiers', () => {
+  const regex = new RE([ ZeroOrMore(Any) ]);
+  expect(regex.match("a")).toBe(true);
+  expect(regex.match("aaaa")).toBe(true);
+  expect(regex.match("ab")).toBe(true);
+});
+
 test('An empty sequence should not be matched', () => {
   const emptyRegex = new RE([Any]);
   expect(emptyRegex.match("")).toBe(false);
@@ -34,10 +50,12 @@ test('An empty sequence should not be matched', () => {
 
 /** RepetitionNode */
 test('A string with one repeated sequence should match', () => {
-  const regex = new RE(["a", ZeroOrMore("abc"), "d"]);
+  const regex = new RE(["a", ZeroOrMore(["a", "b", "c"]), "d"]);
   expect(regex.match("aabcd")).toBe(true);
   expect(regex.match("ad")).toBe(true);
   expect(regex.match("aabcabcd")).toBe(true);
+
+  expect(regex.match("aabd")).toBe(false);
 });
 
 describe('Testing with case insensitive mode works', () => {

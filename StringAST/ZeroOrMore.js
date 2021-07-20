@@ -6,9 +6,6 @@ class _ZeroOrMore {
 }
 
 function ZeroOrMore(repeatable) {
-  if (typeof repeatable !== 'string') {
-    throw new TypeError("Value passed to ZeroOrMore must be a string");
-  }
   return new _ZeroOrMore(repeatable);
 }
 
