@@ -148,6 +148,9 @@ function peg$parse(input, options) {
       peg$c4 = ")",
       peg$c5 = peg$literalExpectation(")", false),
       peg$c6 = function(chars) {return chars},
+      peg$c7 = "|",
+      peg$c8 = peg$literalExpectation("|", false),
+      peg$c9 = function(left, right) { return Or([left, right]) },
 
       peg$currPos          = 0,
       peg$savedPos         = 0,
@@ -288,20 +291,7 @@ function peg$parse(input, options) {
   function peg$parsestart() {
     var s0;
 
-    s0 = peg$parseregex();
-
-    return s0;
-  }
-
-  function peg$parseregex() {
-    var s0, s1;
-
-    s0 = [];
-    s1 = peg$parsecharGroups();
-    while (s1 !== peg$FAILED) {
-      s0.push(s1);
-      s1 = peg$parsecharGroups();
-    }
+    s0 = peg$parseor();
 
     return s0;
   }
@@ -372,6 +362,45 @@ function peg$parse(input, options) {
 
     return s0;
   }
+
+  function peg$parseor() {
+    var s0, s1, s2, s3;
+
+    s0 = peg$currPos;
+    s1 = peg$parsecharGroups();
+    if (s1 !== peg$FAILED) {
+      if (input.charCodeAt(peg$currPos) === 124) {
+        s2 = peg$c7;
+        peg$currPos++;
+      } else {
+        s2 = peg$FAILED;
+        if (peg$silentFails === 0) { peg$fail(peg$c8); }
+      }
+      if (s2 !== peg$FAILED) {
+        s3 = peg$parsecharGroups();
+        if (s3 !== peg$FAILED) {
+          peg$savedPos = s0;
+          s1 = peg$c9(s1, s3);
+          s0 = s1;
+        } else {
+          peg$currPos = s0;
+          s0 = peg$FAILED;
+        }
+      } else {
+        peg$currPos = s0;
+        s0 = peg$FAILED;
+      }
+    } else {
+      peg$currPos = s0;
+      s0 = peg$FAILED;
+    }
+
+    return s0;
+  }
+
+
+    const {Or} = require("../StringAST");
+
 
   peg$result = peg$startRuleFunction();
 
