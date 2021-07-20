@@ -16,9 +16,17 @@ test('Parses regex with nested character groups', () => {
 
 /* Testing OR */
 const {Or} = require('../StringAST');
-test('Parses a regex with an Or quantifier', () => {
-  expect(parser.parse("a|c")).toEqual(Or(["a", "c"]));
-})
+describe('Parses expressions with Or', () => {
+  test('Parses a regex with an Or quantifier', () => {
+    expect(parser.parse("a|c")).toEqual([Or([ "a", "c" ])]);
+  });
+  
+  test('With character groups and individual characters', () => {
+    expect(parser.parse("(ab)|c")).toEqual([Or([["a", "b"], "c"])]);
+    expect(parser.parse("c|(ab)")).toEqual([Or(["c", ["a", "b"]])]);
+    expect(parser.parse("c|ab")).toEqual([Or(["c", "a"]), "b"]);
+  });
+});
 
 const {Any} = require("../StringAST");
 /* Testing Any */

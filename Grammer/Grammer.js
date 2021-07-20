@@ -1,10 +1,16 @@
 {
-  const {Any, ZeroOrMore} = require("../StringAST");
+  const {Or, Any, ZeroOrMore} = require("../StringAST");
 }
 start = regex
 
 regex
-	= head:(match/charGroups)  tail:regex? { return tail ? [...head, ...tail] : [...head] }
+  = head:(match / charGroups) or:or? tail:regex? {
+    if(or) {
+      const [ next, ...rest ] = tail;
+      return tail && [Or([ ...head, next ]), ...rest];
+    }
+    return tail ? [ ...head, ...tail ] : [ ...head ];
+  }
   
 charGroups = "(" chars: regex ")" quantifier:quantifier ? {
   if (quantifier === ZeroOrMore) {
@@ -21,6 +27,8 @@ chars = digits:[a-zA-Z] { return [digits]; }
 any = [\.] { return [Any] }
 
 zeroOrMore = [\*] {return ZeroOrMore};
+
+or = [\|] {return Or};
 
 quantifier = zeroOrMore
 
