@@ -1,4 +1,4 @@
-const {CharacterNode, EmptyString, NeverMatches} = require("./RegexpNode");
+const {CharacterNode, EmptyString, NeverMatches} = require("./index");
 
 test('Progresses to the next character when deriving', () => {
   const expectedDerivedSequence = new CharacterNode('e', EmptyString);

@@ -1,8 +1,8 @@
-const { RegexpNode, NeverMatches } = require("./RegexpNode");
+const {RegexpNode, NeverMatches} = require("./index");
 
 test('Derivative of a RegexpNode does not match anything', () => {
   const regexNode = new RegexpNode();
-  expect(regexNode.derive() === NeverMatches).toBe(true); 
+  expect(regexNode.derive() === NeverMatches).toBe(true);
 });
 
 test('A RegexpNode does not match the end', () => {

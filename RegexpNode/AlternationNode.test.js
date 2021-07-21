@@ -1,4 +1,4 @@
-const {AlternationNode, CharacterNode, NeverMatches, EmptyString} = require('./RegexpNode');
+const {AlternationNode, CharacterNode, NeverMatches, EmptyString} = require('./index');
 
 test('If alternatives are all NeverMatches, then its derivative does not match', () => {
   const alternationNode = new AlternationNode([NeverMatches, NeverMatches]);
