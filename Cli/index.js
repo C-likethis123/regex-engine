@@ -6,10 +6,18 @@ const program = new Command();
 
 
 function runRegex(regex, string, options) {
-  const parsedRegex = parser.parse(regex);
-  const regexEngine = new RE(parsedRegex, options);
-  const matchResult = regexEngine.match(string);
-  console.log(matchResult);
+  try {
+    const parsedRegex = parser.parse(regex);
+    const regexEngine = new RE(parsedRegex, options);
+    const matchResult = regexEngine.match(string);
+    console.log(matchResult);
+  } catch (err) {
+    if (err instanceof parser.SyntaxError) {
+      console.error(err.message);
+    } else {
+      throw err;
+    }
+  }
 }
 program
   .argument('<regex')
