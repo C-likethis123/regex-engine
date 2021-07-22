@@ -5,15 +5,19 @@ const {RE} = require("../RE.js");
 const program = new Command();
 
 
-function runRegex(regex, string) {
+function runRegex(regex, string, options) {
   const parsedRegex = parser.parse(regex);
-  const regexEngine = new RE(parsedRegex);
+  const regexEngine = new RE(parsedRegex, options);
   const matchResult = regexEngine.match(string);
   console.log(matchResult);
 }
 program
-  .arguments('<regex> <string>')
-  .action((regex, string) => runRegex(regex, string))
+  .argument('<regex')
+  .argument('<string>')
+  .option('-i', 'compile in case insensitive mode')
+  .action((regex, string, options) => {
+    runRegex(regex, string, options)
+  })
 
 function cli(args) {
   program.parse(args);
