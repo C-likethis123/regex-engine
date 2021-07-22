@@ -60,13 +60,13 @@ test('A string with one repeated sequence should match', () => {
 
 describe('Testing with case insensitive mode works', () => {
   test('Regex matches test strings with lower and uppercases', () => {
-    const regex = new RE(["a"], [Flags.CASE_INSENSITIVE]);
+    const regex = new RE(["a"], {[Flags.CASE_INSENSITIVE]: true});
     expect(regex.match("A")).toBe(true);
     expect(regex.match("a")).toBe(true);
   });
 
   test("Regex with OR operator matches insensitive mode", () => {
-    const regex = new RE(["a", Or(["B", "C"])], [Flags.CASE_INSENSITIVE]);
+    const regex = new RE(["a", Or(["B", "C"])], {[Flags.CASE_INSENSITIVE]: true});
     expect(regex.match("aB")).toBe(true);
     expect(regex.match("ab")).toBe(true);
     expect(regex.match("ac")).toBe(true);
