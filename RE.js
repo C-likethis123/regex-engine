@@ -6,9 +6,9 @@ const {Flags} = require("./Flag.js");
  * Entry point for the compiler
  */
 class RE {
-  constructor(regexp, flags = []) {
+  constructor(regexp, flags = {}) {
     this.isCaseInsensitive = false;
-    for (const flag of flags) {
+    for (const flag in flags) {
       if (flag === Flags.CASE_INSENSITIVE) {
         this.isCaseInsensitive = true;
       }

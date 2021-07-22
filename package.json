@@ -3,16 +3,27 @@
   "version": "1.0.0",
   "type": "commonjs",
   "description": "",
-  "main": "Grammer/parser.js",
+  "main": "Cli/bin/index.js",
+  "bin": {
+    "@C-likethis123/regex-engine": "Cli/bin/create-project",
+    "regex-engine": "Cli/bin/create-project"
+  },
   "scripts": {
     "test": "jest",
     "generate-parser": "pegjs -o Grammer/Parser.js Grammer/Grammer.js",
     "coverage": "jest --collect-coverage"
   },
   "author": "",
+  "keywords": [
+    "cli",
+    "regex-engine"
+  ],
   "license": "ISC",
   "devDependencies": {
     "jest": "^27.0.6",
     "pegjs": "^0.10.0"
+  },
+  "dependencies": {
+    "commander": "^8.0.0"
   }
 }
